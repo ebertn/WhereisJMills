@@ -17,10 +17,15 @@ bot.on('message', (message) => {
   if(message.content.toLowerCase().indexOf('where') !== -1 && (message.content.toLowerCase().indexOf('jmills') !== -1 || message.content.toLowerCase().indexOf('j mills') !== -1)){
 		jMillsSaline(message);
   } else if (message.content === '/kb' || message.content === '/puffdaddy' || message.content === '/jmills' || message.content === '/chuberry'){
+		// Delete the message
+		message.delete()
+					 .then(msg => console.log(`Deleted message from ${msg.author}`))
+					 .catch(console.error);
+					 
 		if(!isPlayingVoice){
 			playFile(message);
 		}
-  }
+	}
 });
 
 function jMillsSaline(message) {
@@ -35,6 +40,8 @@ function playFile(message) {
 	if (message.member.voiceChannel) {
 		message.member.voiceChannel.join()
     	.then(connection => { // Connection is an instance of VoiceConnection
+
+
 				const dispatcher = connection.playFile('/mnt/h/whereisjmills/voice_files/' + file_name + '.mp3');  //C:\\Users\\nicke\\DiscordBots\\whereisjmills\\voice_files\\puffdaddy.mp3');
 				isPlayingVoice = true;
 				dispatcher.setVolume(1);
