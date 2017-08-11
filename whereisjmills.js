@@ -51,6 +51,7 @@ function playFile(message) {
     }
 }
 
+// Useless for now, always returns false (bug)
 function isValidVoiceCommand(message) {
 	for (var command in valid_voice_commands) {
 		if(message.content === command){
