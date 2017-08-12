@@ -1,5 +1,6 @@
 var Discord = require('discord.js');
 var bot = new Discord.Client();
+var token = require('./token.js');
 
 var valid_voice_commands = ['/puffdaddy',
 											'/kb',
@@ -7,9 +8,9 @@ var valid_voice_commands = ['/puffdaddy',
 										  '/chuberry'];
 var isPlayingVoice = false;
 
-bot.login('MzI5NzE2MDEyOTc3MDk0NjU2.DEXwJw.v_42LRxMJUoUJiU1CfZ2I86mhow');
+bot.login(token);
 
-console.log('------------------J Mills Started------------------')
+console.log('------------------J Mills Started------------------');
 
 bot.on('message', (message) => {
 	console.log('Received message: "' + message.content + '" from ' + message.author.username + ' --> Responding');
@@ -17,13 +18,15 @@ bot.on('message', (message) => {
   if(message.content.toLowerCase().indexOf('where') !== -1 && (message.content.toLowerCase().indexOf('jmills') !== -1 || message.content.toLowerCase().indexOf('j mills') !== -1)){
 		jMillsSaline(message);
   } else if (message.content === '/kb' || message.content === '/puffdaddy' || message.content === '/jmills' || message.content === '/chuberry'){
+		var currentMessage = message
+
 		// Delete the message
 		message.delete()
-					 .then(msg => console.log(`Deleted message from ${msg.author}`))
+					 .then(msg => console.log(`Deleted message from ${msg.author.username}`))
 					 .catch(console.error);
-					 
+
 		if(!isPlayingVoice){
-			playFile(message);
+			playFile(currentMessage);
 		}
 	}
 });
@@ -40,7 +43,6 @@ function playFile(message) {
 	if (message.member.voiceChannel) {
 		message.member.voiceChannel.join()
     	.then(connection => { // Connection is an instance of VoiceConnection
-
 
 				const dispatcher = connection.playFile('/mnt/h/whereisjmills/voice_files/' + file_name + '.mp3');  //C:\\Users\\nicke\\DiscordBots\\whereisjmills\\voice_files\\puffdaddy.mp3');
 				isPlayingVoice = true;
@@ -68,8 +70,4 @@ function isValidVoiceCommand(message) {
 	}
 	console.log("fuck why is it here");
 	return(false);
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
