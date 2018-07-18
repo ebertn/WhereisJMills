@@ -68,6 +68,6 @@ function isValidVoiceCommand(message) {
 			return(true);
 		}
 	}
-	console.log("fuck why is it here");
+	console.log("why is it here");
 	return(false);
 }
